@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Time Flies · Assessment 01 · Hussein Masri</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: a scrolling campaign presentation. Sticky nav carries a "flight progress" bar (scroll = flight time).
+   Chapters alternate White Cloud / soft grey. Single light look on purpose: Air Arabia's own brand world. */
+@font-face{font-family:"AirArabia";src:url("fonts/AirArabia_Rg.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"AirArabia";src:url("fonts/AirArabia_Bd.ttf") format("truetype");font-weight:700;font-display:swap}
+:root{
+  --red:#FF0041; --cherry:#C20041; --turq:#00D0D0; --gray:#39454B;
+  --bg:#FFFFFF; --soft:#F6F4F5; --line:#E6E1E3; --fg:#22292D; --muted:#5E6A70; --ink:#141719;
+  --display:"AirArabia","Noto Sans",system-ui,sans-serif;
+  --body:"Noto Sans",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.7;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;margin:0;text-wrap:balance;color:var(--gray)}
+p{margin:0}
+button{font:inherit}
+
+/* ---------- nav + flight progress ---------- */
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.top .links{display:flex;align-items:center;gap:18px;padding-block:9px;overflow-x:auto;scrollbar-width:none}
+nav.top .links::-webkit-scrollbar{display:none}
+nav.top .brand{font-family:var(--display);font-weight:700;color:var(--red);white-space:nowrap}
+nav.top a{font-family:var(--display);font-size:14px;color:var(--gray);text-decoration:none;white-space:nowrap;padding:3px 2px;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
+nav.top a:hover,nav.top a:focus-visible,nav.top a.on{border-bottom-color:var(--red);color:var(--red);outline:none}
+.flight{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px;padding-block:0 9px;font-family:var(--display);font-size:13px;color:var(--muted)}
+.flight b{color:var(--gray)}
+.track{position:relative;height:4px;background:var(--line);border-radius:2px}
+.track i{position:absolute;inset:0 auto 0 0;width:0;background:var(--red);border-radius:2px}
+.track em{position:absolute;top:50%;left:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(255,0,65,.18)}
+#left{min-width:92px;text-align:right;font-variant-numeric:tabular-nums;color:var(--red);font-weight:700}
+
+/* ---------- cover ---------- */
+.cover{background:var(--red);color:#fff;overflow:hidden;position:relative}
+.cover .wrap{padding-block:72px 64px;display:grid;gap:22px}
+.cover .kicker{font-family:var(--display);font-size:14px;letter-spacing:.06em;opacity:.95}
+.clock{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,30px);display:flex;align-items:center;gap:14px;font-variant-numeric:tabular-nums}
+.clock .lab{background:#fff;color:var(--red);padding:2px 12px;font-size:15px}
+.cover h1{color:#fff;font-size:clamp(64px,13vw,170px);font-weight:700;letter-spacing:-.015em;line-height:.95}
+.cover h1 span{display:inline-block}
+.cover p{max-width:58ch;font-size:19px;color:#fff}
+.cover .meta{display:flex;flex-wrap:wrap;gap:8px 10px}
+.cover .meta span{font-family:var(--display);font-size:13px;border:1px solid rgba(255,255,255,.6);padding:2px 10px}
+.cover .clouds{position:absolute;inset:auto 0 0 0;height:120px;pointer-events:none;background:
+  radial-gradient(60px 24px at 10% 70%,rgba(255,255,255,.18),transparent 70%),radial-gradient(90px 30px at 35% 60%,rgba(255,255,255,.14),transparent 70%),
+  radial-gradient(70px 26px at 62% 75%,rgba(255,255,255,.16),transparent 70%),radial-gradient(110px 34px at 88% 62%,rgba(255,255,255,.12),transparent 70%);
+  background-size:100% 100%}
+
+/* ---------- note ---------- */
+.note-sub{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.note-sub .card{border-top:3px solid var(--red)}
+
+/* ---------- chapters ---------- */
+.chapter{padding-block:76px;border-top:1px solid var(--line)}
+.chapter>.wrap{display:grid;gap:28px}
+main>.chapter:nth-of-type(odd){background:var(--soft)}
+main>.chapter:nth-of-type(odd) .card,main>.chapter:nth-of-type(odd) .script,main>.chapter:nth-of-type(odd) .callout{background:#fff}
+.num{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--red)}
+h2{font-size:clamp(34px,5.6vw,66px)}
+h3{font-size:clamp(22px,2.6vw,28px)}
+h4{font-size:18px}
+.lead{font-size:20px;color:var(--muted);max-width:62ch}
+.prose{display:grid;gap:12px;max-width:66ch}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px}
+.grid9{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+figure{margin:0;display:grid;gap:8px;align-content:start;min-width:0}
+figure img{width:100%;max-width:100%;height:auto;display:block;border-radius:4px;box-shadow:0 0 0 1px var(--line)}
+img.zoom{cursor:zoom-in;transition:transform .35s ease,box-shadow .35s ease}
+img.zoom:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(20,23,25,.16)}
+figcaption{font-size:14px;color:var(--muted)}
+figcaption b{font-family:var(--display);color:var(--gray)}
+.card{background:var(--soft);border-radius:4px;padding:24px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h4{color:var(--red)}
+.card.pick{background:#fff;box-shadow:0 0 0 2px var(--red)}
+.tag{display:inline-block;justify-self:start;font-family:var(--display);font-weight:700;font-size:13px;color:#fff;background:var(--turq);padding:2px 10px}
+.tag.red{background:var(--red)}.tag.gray{background:var(--gray)}
+ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.callout{border-left:4px solid var(--red);background:var(--soft);padding:16px 20px;font-size:16px}
+
+/* stats strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px}
+.stat{background:#fff;border-radius:4px;padding:18px;display:grid;gap:2px}
+.stat b{font-family:var(--display);font-size:44px;line-height:1;color:var(--red);font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--muted)}
+
+/* KV options switcher */
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font-family:var(--display);font-size:15px;background:#fff;color:var(--gray);border:1px solid var(--line);padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
+.opts button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.opts button:focus-visible{outline:2px solid var(--gray);outline-offset:2px}
+.stage{position:relative}
+.stage img{width:100%;display:block;border-radius:4px;box-shadow:0 24px 60px rgba(20,23,25,.18)}
+.stage .cap{position:absolute;left:16px;bottom:16px;background:var(--gray);color:#fff;font-family:var(--display);font-size:14px;padding:4px 12px}
+.fade{animation:fadein .5s ease}
+@keyframes fadein{from{opacity:.25;transform:scale(.99)}to{opacity:1;transform:none}}
+
+/* big line */
+.line{background:var(--red);color:#fff;border-radius:4px;padding:36px;display:grid;gap:12px;overflow:hidden}
+.line .big{font-family:var(--display);font-weight:700;font-size:clamp(48px,9vw,112px);line-height:1;color:#fff}
+.line p{color:#fff;max-width:60ch;font-size:19px}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px}
+.why div{border-top:3px solid var(--red);padding-top:12px;display:grid;gap:6px}
+.why b{font-family:var(--display);font-size:18px;color:var(--gray)}
+
+/* phones */
+.phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px;align-items:start}
+.phone{width:min(100%,320px);justify-self:center;background:var(--ink);border-radius:40px;padding:14px;box-shadow:0 30px 60px rgba(20,23,25,.25)}
+.phone .screen{position:relative;border-radius:28px;overflow:hidden;background:#fff}
+.ig-head{display:flex;align-items:center;gap:8px;padding:10px 12px;font-family:var(--display);font-size:13px;color:var(--gray)}
+.ig-head i{width:26px;height:26px;border-radius:50%;background:var(--red);display:block}
+.track-c{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.track-c::-webkit-scrollbar{display:none}
+.track-c img{flex:0 0 100%;width:100%;scroll-snap-align:start;display:block;border-radius:0;box-shadow:none}
+.dots{display:flex;justify-content:center;gap:6px;padding:10px 0 14px}
+.dots button{width:8px;height:8px;border-radius:50%;border:0;background:#d6d6d6;padding:0;cursor:pointer}
+.dots button[aria-current="true"]{background:var(--red);transform:scale(1.25)}
+.story{aspect-ratio:9/16;position:relative}
+.story img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;border-radius:0;box-shadow:none}
+.story img.on{opacity:1}
+.story img:first-child{opacity:1}
+.story.ready img:first-child:not(.on){opacity:0}
+.bars{position:absolute;z-index:2;top:10px;left:10px;right:10px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.bars span{height:3px;background:rgba(57,69,75,.25);border-radius:2px;overflow:hidden}
+.bars span i{display:block;height:100%;width:0;background:var(--red)}
+.phone-cap{text-align:center;font-size:14px;color:var(--muted);margin-top:12px}
+.phone-cap b{font-family:var(--display);color:var(--gray)}
+
+/* platforms */
+.plats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
+.plat{background:#fff;border-radius:4px;padding:20px;display:grid;gap:8px;align-content:start;border-top:4px solid var(--red);transition:transform .25s,box-shadow .25s}
+.plat:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(20,23,25,.12)}
+.plat h4{color:var(--gray)}
+.plat small{font-family:var(--display);color:var(--red);font-size:13px}
+
+/* tables & scripts */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:700px;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-family:var(--display);font-size:14px;color:var(--gray)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-family:var(--display);font-weight:700;white-space:nowrap;color:var(--gray)}
+.script{background:var(--soft);border-radius:4px;padding:26px;display:grid;gap:8px;min-width:0}
+.script .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:4px 8px;border-radius:3px;transition:background .3s,color .3s}
+.script .r.on{background:var(--red);color:#fff}
+.script .r.on .k,.script .r.on .sfx{color:#fff}
+@media (max-width:560px){.script .r{grid-template-columns:1fr;gap:2px}}
+.script .k{font-family:var(--display);font-weight:700;font-size:14px;color:var(--red)}
+.script .sfx{color:var(--muted);font-style:italic}
+.player{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.player button{font-family:var(--display);font-weight:700;background:var(--red);color:#fff;border:0;padding:10px 20px;border-radius:2px;cursor:pointer}
+.player button:focus-visible{outline:2px solid var(--gray);outline-offset:2px}
+.dial{width:54px;height:54px;border-radius:50%;border:3px solid var(--gray);position:relative;background:#fff}
+.dial i{position:absolute;left:50%;top:50%;width:3px;height:22px;margin-left:-1.5px;background:var(--red);transform-origin:50% 0;transform:rotate(180deg)}
+.player .t{font-family:var(--display);font-variant-numeric:tabular-nums;color:var(--muted)}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.sw{width:110px;display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.sw i{display:block;height:52px;border-radius:3px;box-shadow:0 0 0 1px var(--line)}
+
+/* reveal (content stays visible without JS; JS only plays a rise when a block enters) */
+.rise{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:.15;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:30;background:rgba(20,23,25,.88);display:grid;place-items:center;padding:max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:88vh;border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lb button{position:absolute;top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));background:#fff;border:0;font-family:var(--display);font-weight:700;padding:8px 14px;cursor:pointer}
+
+footer.end{background:var(--red);color:#fff}
+footer.end .wrap{padding-block:80px;display:grid;gap:14px}
+footer.end .big{font-family:var(--display);font-weight:700;font-size:clamp(56px,10vw,128px);line-height:1}
+footer.end p{color:#fff;max-width:60ch}
+
+/* morph stage (One idea, many faces) */
+.morph{position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#0e1113;box-shadow:0 30px 70px rgba(20,23,25,.28);max-width:100%}
+.m-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 100%)}
+.m-img.on{clip-path:inset(0 0 0 0)}
+.m-img.in{z-index:2;animation:wipe .95s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes wipe{0%{clip-path:inset(0 100% 0 0);filter:saturate(1.8) contrast(1.3) hue-rotate(-12deg)}60%{filter:saturate(1.3) contrast(1.1)}100%{clip-path:inset(0 0 0 0);filter:none}}
+.scan{position:absolute;z-index:3;top:0;bottom:0;left:-4px;width:3px;background:#FF0041;box-shadow:0 0 18px 6px rgba(255,0,65,.55);opacity:0}
+.scan.go{animation:scan .95s cubic-bezier(.7,0,.2,1)}
+@keyframes scan{0%{left:0;opacity:1}100%{left:100%;opacity:1}}
+.hud{position:absolute;inset:0;z-index:4;pointer-events:none;font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#fff}
+.hud .c{position:absolute;width:26px;height:26px;border:2px solid rgba(255,255,255,.85)}
+.hud .tl{top:14px;left:14px;border-right:0;border-bottom:0}.hud .tr{top:14px;right:14px;border-left:0;border-bottom:0}
+.hud .bl{bottom:14px;left:14px;border-right:0;border-top:0}.hud .br{bottom:14px;right:14px;border-left:0;border-top:0}
+.hud-top,.hud-bot{position:absolute;left:52px;right:52px;display:flex;justify-content:space-between;gap:10px}
+.hud-top{top:18px}.hud-bot{bottom:18px}
+.hud span{background:rgba(14,17,19,.62);padding:3px 8px;backdrop-filter:blur(3px)}
+.hud b{color:#FF4D74}
+@media (max-width:560px){.hud{font-size:9px}.hud-top,.hud-bot{left:42px;right:42px}}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font-family:var(--display);font-size:15px;background:#fff;color:var(--gray);border:1px solid var(--line);padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
+.opts button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+.opts button:focus-visible{outline:2px solid var(--gray);outline-offset:2px}
+.sb figcaption{font-size:13px}
+/* radio */
+.ptrack{flex:1 1 160px;height:4px;background:var(--line);border-radius:2px;position:relative;min-width:120px}
+.ptrack i{position:absolute;inset:0 auto 0 0;width:0;background:var(--red);border-radius:2px}
+.demo-note{font-size:13px;color:var(--muted)}
+/* AI workflow */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.tool{display:flex;align-items:center;gap:14px;background:#fff;border-radius:6px;padding:14px 16px;box-shadow:0 0 0 1px var(--line);transition:transform .25s,box-shadow .25s}
+.tool:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,23,25,.12)}
+.tool b{font-family:var(--display);color:var(--gray);display:block}
+.tool small{color:var(--muted);font-size:13px}
+.ico{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;flex:0 0 48px}
+.ico svg{width:48px;height:48px}
+.ico-gpt{background:#10A37F}.ico-ps{background:#001E36}.ico-claude{background:#D97757}.ico-stock{background:#F1EEEF}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.step{background:#fff;border-radius:6px;padding:20px;display:grid;gap:12px;align-content:start;box-shadow:0 0 0 1px var(--line);min-width:0}
+.sn{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--red);letter-spacing:.08em}
+.term{background:#0e1113;color:#d7f7e9;font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.6;border-radius:6px;padding:16px;min-height:200px;white-space:pre-wrap;overflow-wrap:anywhere}
+.term::before{content:"prompt ›";color:#FF4D74;margin-right:8px}
+.cur{display:inline-block;width:8px;height:15px;background:#d7f7e9;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+canvas#gen{width:100%;height:auto;border-radius:6px;background:#0e1113;display:block}
+.mini{justify-self:start;font-family:var(--display);font-size:13px;background:#fff;border:1px solid var(--line);color:var(--gray);padding:4px 12px;cursor:pointer;border-radius:2px}
+.ba{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:6px;max-width:100%}
+.ba>img,.ba-top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ba-top{position:absolute;inset:0;clip-path:inset(0 50% 0 0)}
+.ba-line{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.15),0 0 14px rgba(255,0,65,.6);pointer-events:none}
+.ba-line::after{content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#FF0041;color:#fff;font-size:12px;padding:6px 8px;border-radius:20px;white-space:nowrap}
+.ba-lab{position:absolute;top:12px;background:rgba(14,17,19,.7);color:#fff;font-family:ui-monospace,Consolas,monospace;font-size:12px;padding:3px 8px}
+.ba-lab.l{left:12px}.ba-lab.r{right:12px}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+@media (prefers-reduced-motion:reduce){.m-img.in,.scan.go,.cur{animation:none}.m-img.in{clip-path:inset(0)}}
+
+/* storyboard sheet */
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.shot{background:#fff;border-radius:6px;padding:12px;box-shadow:0 0 0 1px var(--line);display:grid;gap:8px;align-content:start}
+.shot .ph{position:relative}
+.shot .ph img{border-radius:4px;box-shadow:none}
+.shot .tc,.shot .fn{position:absolute;top:8px;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#fff;padding:2px 7px}
+.shot .tc{right:8px;background:rgba(14,17,19,.75)}.shot .fn{left:8px;background:#FF0041}
+.shot p{font-size:14px;line-height:1.5;color:var(--fg)}
+.shot p b{display:block;font-family:var(--display);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+/* why boxes */
+.whybox{background:var(--gray);color:#fff;border-radius:6px;padding:24px 26px;display:grid;gap:8px;position:relative;overflow:hidden}
+.whybox::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:#FF0041}
+.whybox span{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#FF6F8F}
+.whybox p{color:#fff;font-size:17px;max-width:72ch}
+
+/* editing section */
+.edits{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px}
+.edit{background:#fff;border-radius:6px;padding:16px;box-shadow:0 0 0 1px var(--line);display:grid;gap:4px;align-content:start}
+.edit span{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--red)}
+.edit p{font-size:14px;color:var(--muted);line-height:1.5}
+.flip{position:relative;display:grid;gap:8px;padding:0;border:0;background:none;cursor:pointer;text-align:left;font:inherit}
+.flip img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block;grid-area:1/1;transition:opacity .6s ease, transform .6s ease}
+.flip .f-raw{opacity:1}.flip .f-fin{opacity:0;transform:scale(1.02)}
+.flip[aria-pressed="true"] .f-raw{opacity:0}.flip[aria-pressed="true"] .f-fin{opacity:1;transform:none}
+.flip .f-lab{grid-area:1/1;align-self:start;justify-self:start;margin:10px;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#fff;background:rgba(14,17,19,.72);padding:3px 8px;z-index:1}
+.flip .f-lab i{font-style:normal}.flip .f-lab .b{display:none}
+.flip[aria-pressed="true"] .f-lab{background:#FF0041}.flip[aria-pressed="true"] .f-lab .a{display:none}.flip[aria-pressed="true"] .f-lab .b{display:inline}
+.flip b{font-family:var(--display);color:var(--gray)}
+.flip:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.ba{box-shadow:0 30px 70px rgba(20,23,25,.25)}
+/* process */
+.process{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;counter-reset:p}
+.pstep{background:var(--gray);color:#fff;border-radius:8px;padding:22px;display:grid;gap:8px;align-content:start;position:relative;overflow:hidden;transition:transform .25s}
+.pstep:hover{transform:translateY(-4px)}
+.pstep::after{content:"";position:absolute;right:-30px;bottom:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,0,65,.25)}
+.pstep .ico{width:52px;height:52px;border-radius:12px;background:#FF0041;display:grid;place-items:center}
+.pstep .ico svg{width:40px;height:40px}
+.pstep small{font-family:ui-monospace,Consolas,monospace;color:#FF8FA8}
+.pstep h4{color:#fff}.pstep p{color:#E6EAEC;font-size:15px}
+
+.lead.just{text-align:justify;hyphens:auto;max-width:none}
+.byline{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:10px;padding-top:18px;border-top:1px solid rgba(255,255,255,.45)}
+.by-lab{font-family:var(--display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:.85}
+.by-name{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,34px);color:#fff}
+.by-role{font-size:15px;color:#fff;opacity:.92;flex-basis:100%}
+.end-by{margin-top:24px}
+.thumbs{display:none}
+#baTabs{margin-bottom:-8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rise,.fade{animation:none}img.zoom,.plat{transition:none}}
+html{-webkit-text-size-adjust:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}
+.back{color:var(--red)!important;font-weight:700}
+.next{display:inline-block;justify-self:start;margin-top:18px;color:#fff;font-family:var(--display);text-decoration:none;border:1px solid rgba(255,255,255,.6);padding:8px 16px}
+.next:hover,.next:focus-visible{background:#fff;color:var(--red);outline:none}
+</style>
+</head>
+<body>
+
+
+<nav class="top" aria-label="Chapters">
+  <div class="wrap links">
+    <a class="back" href="index.html">← All work</a>
+    <span class="brand">Time flies.</span>
+    <a href="#note">Note</a><a href="#kv">Key Visual</a><a href="#edit">AI to Final</a><a href="#products">Products</a><a href="#idea">Idea</a><a href="#routes">Routes</a><a href="#social">Social</a><a href="#films">Films</a><a href="#outdoor">Outdoor</a><a href="#radio">Radio</a><a href="#flyers">Flyers</a><a href="#ai">Process</a><a href="#production">Production</a>
+  </div>
+  <div class="wrap flight" aria-hidden="true">
+    <b>SHJ</b><div class="track"><i id="fill"></i><em id="plane"></em></div><b>BOM</b><span id="left">3h 10m</span>
+  </div>
+</nav>
+
+<header class="cover"><div class="wrap">
+  <div class="kicker">AIR ARABIA · VISUAL ART DESIGNER ASSIGNMENT · BRIEF 1</div>
+  <div class="clock" aria-live="off"><span class="lab" id="clab">Flight time</span><span id="ctime">3h 10m</span></div>
+  <h1><span>Time</span> <span>flies.</span></h1>
+  <p>An integrated 360° campaign for SkyTime, SkyCafé and LegRoom. We can't make a flight shorter. We can make it feel shorter.</p>
+  <div class="meta"><span>Key Visual</span><span>Social</span><span>Social Films</span><span>Outdoor</span><span>Radio</span><span>Internal</span><span>Trade</span></div>
+  <div class="byline"><span class="by-lab">Presented by</span><span class="by-name">Hussein Masri</span><span class="by-role">Candidate for the Visual Art Designer role at Air Arabia</span></div>
+</div><div class="clouds"></div></header>
+
+<main>
+<!-- NOTE -->
+<section class="chapter" id="note"><div class="wrap">
+  <div class="num">BEFORE WE START</div>
+  <h2>A note on this submission.</h2>
+  <div class="note-sub">
+    <div class="card"><h4>Timeframe</h4><p>These concepts were developed within a short timeframe. The aim is to show my creative thinking, the routes I explored and how one idea extends across every touchpoint, rather than finished production artwork.</p></div>
+    <div class="card"><h4>Imagery</h4><p>The imagery was created with AI image-generation tools, then enhanced and edited in Adobe applications. As no real Air Arabia imagery was available, some details (cabin interiors, packaging, branding) may not be fully accurate; they were built from imagination and online research to illustrate the direction.</p></div>
+    <div class="card"><h4>LegRoom</h4><p>LegRoom is presented as a product mark, designed to sit alongside SkyTime and SkyCafé so the three onboard products read as one family.</p></div>
+  </div>
+  <div class="stats" aria-label="At a glance">
+    <div class="stat"><b data-count="1">1</b><span>campaign idea</span></div>
+    <div class="stat"><b data-count="3">3</b><span>key visual options</span></div>
+    <div class="stat"><b data-count="3">3</b><span>products</span></div>
+    <div class="stat"><b data-count="7">7</b><span>touchpoints</span></div>
+    <div class="stat"><b data-count="4">4</b><span>routes explored</span></div>
+  </div>
+</div></section>
+
+<!-- KEY VISUAL -->
+<section class="chapter" id="kv"><div class="wrap">
+  <div class="num">01 · MASTER KEY VISUAL · THREE OPTIONS</div>
+  <h2>One idea, many faces.</h2>
+  <p class="lead">Three options for the master key visual, each built for a key region. Same idea, same layout, same products; a family from each audience.</p>
+  <div class="morph" id="morph">
+    <img class="m-img on" src="img/kv_arab.jpg" alt="Option 1: GCC / Arab family">
+    <img class="m-img" src="img/kv_india.jpg" alt="Option 2: India region family">
+    <img class="m-img" src="img/kv_eastern.jpg" alt="Option 3: Eastern / Europe family">
+    <span class="scan" aria-hidden="true"></span>
+    <div class="hud" aria-hidden="true">
+      <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+      <div class="hud-top"><span>IDEA · <b>TIME FLIES</b> · CONSTANT</span><span id="hudIdx">01 / 03</span></div>
+      <div class="hud-bot"><span>AUDIENCE ▸ <b id="hudAud">GCC / ARAB</b></span><span>FACE · REGIONAL</span></div>
+    </div>
+  </div>
+  <div class="opts" role="group" aria-label="Key visual options">
+    <button type="button" aria-pressed="true" data-i="0">Option 1 · GCC / Arab</button>
+    <button type="button" aria-pressed="false" data-i="1">Option 2 · India region</button>
+    <button type="button" aria-pressed="false" data-i="2">Option 3 · Eastern / Europe</button>
+  </div>
+  <div class="grid3">
+    <figure><img class="zoom" src="img/kv_arab.jpg" alt="Option 1: GCC / Arab family"><figcaption><b>Option 1 · GCC / Arab.</b> The home market: an Emirati family sharing a show and a SkyCafé meal.</figcaption></figure>
+    <figure><img class="zoom" src="img/kv_india.jpg" alt="Option 2: India region family"><figcaption><b>Option 2 · India region.</b> One of Air Arabia's largest markets, in the same moment.</figcaption></figure>
+    <figure><img class="zoom" src="img/kv_eastern.jpg" alt="Option 3: Eastern / Europe family"><figcaption><b>Option 3 · Eastern / Europe.</b> The same idea for Eastern and European audiences.</figcaption></figure>
+  </div>
+  <div class="grid3">
+    <div class="card"><h4>Photography</h4><p>Warm daylight, real emotion, Red Cherry living inside the scene on headrests, cups and the SkyCafé box (guidelines p. 89).</p></div>
+    <div class="card"><h4>Typography</h4><p>Air Arabia typeface. "Time" in Dark Gray, "flies." in Red Cherry. SkyTime, SkyCafé and LegRoom as one product family.</p></div>
+    <div class="card"><h4>How the options work</h4><p>Any option can lead; the other two run as regional versions. A global campaign that still feels close to home.</p></div>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>Real moments, not product shots: a family lost in the moment proves the line without explaining it. One idea, three regional casts, and a layout built on Air Arabia's onboard-product guidelines, so the campaign is unmistakably Air Arabia.</p></div>
+</div></section>
+
+<!-- EDITING -->
+<section class="chapter" id="edit"><div class="wrap">
+  <div class="num">02 · FROM AI GENERATION TO KEY VISUAL</div>
+  <h2>Generated by AI. Made by design.</h2>
+  <p class="lead just">AI gives a starting point, not a key visual. Every image here went through a full design process: the composition was opened for copy, the Air Arabia brand was placed inside the scene, AI artefacts and details were corrected, colour was balanced across the series, and the layout and typography were built on top. Drag the line, or let it play, to see how far each image travelled.</p>
+  <div class="opts" id="baTabs" role="group" aria-label="Choose an image to compare">
+    <button type="button" aria-pressed="true" data-raw="img/raw_master2.jpg" data-fin="img/kv_eastern.jpg">Key visual</button>
+    <button type="button" aria-pressed="false" data-raw="img/raw_skytime.jpg" data-fin="img/kv_skytime.jpg">SkyTime</button>
+    <button type="button" aria-pressed="false" data-raw="img/raw_skycafe.jpg" data-fin="img/kv_skycafe.jpg">SkyCafé</button>
+    <button type="button" aria-pressed="false" data-raw="img/raw_legroom.jpg" data-fin="img/kv_legroom.jpg">LegRoom</button>
+  </div>
+  <div class="ba" id="ba">
+    <img id="baFin" src="img/kv_eastern.jpg" alt="Final design">
+    <div class="ba-top" id="baTop"><img id="baRaw" src="img/raw_master2.jpg" alt="Raw AI generation"></div>
+    <span class="ba-line" id="baLine"></span>
+    <span class="ba-lab l">AI generation</span><span class="ba-lab r">Final design</span>
+    <input type="range" min="0" max="100" value="50" id="baRange" aria-label="Compare the raw AI generation with the final design">
+  </div>
+  <div class="edits">
+    <div class="edit"><span>01</span><h4>Composition</h4><p>Re-cropped and extended to open clean space for the headline and logo.</p></div>
+    <div class="edit"><span>02</span><h4>Brand inside the scene</h4><p>Air Arabia logos on headrests and cups; SkyCafé name and packaging corrected.</p></div>
+    <div class="edit"><span>03</span><h4>Clean-up</h4><p>AI artefacts, distorted text and inconsistent details retouched.</p></div>
+    <div class="edit"><span>04</span><h4>Colour &amp; light</h4><p>Warm daylight and Red Cherry balanced across the whole series.</p></div>
+    <div class="edit"><span>05</span><h4>Layout &amp; typography</h4><p>Air Arabia typeface, product marks and logo placed in the brand system.</p></div>
+  </div>
+  <div class="thumbs" id="baThumbs" aria-hidden="true"><img src="img/raw_master2.jpg" alt=""><img src="img/raw_skytime.jpg" alt=""><img src="img/raw_skycafe.jpg" alt=""><img src="img/raw_legroom.jpg" alt=""></div>
+</div></section>
+
+<!-- PRODUCTS -->
+<section class="chapter" id="products"><div class="wrap">
+  <div class="num">03 · ONE IDEA ACROSS THREE PRODUCTS</div>
+  <h2>Each product finishes the line.</h2>
+  <div class="grid3">
+    <figure><img class="zoom" src="img/kv_skytime.jpg" alt="SkyTime: Time flies. 3 episodes in."><figcaption><b>SkyTime.</b> Time flies. <i>3 episodes in.</i></figcaption></figure>
+    <figure><img class="zoom" src="img/kv_skycafe.jpg" alt="SkyCafé: Time flies. over lunch."><figcaption><b>SkyCafé.</b> Time flies. <i>over lunch.</i></figcaption></figure>
+    <figure><img class="zoom" src="img/kv_legroom.jpg" alt="LegRoom: Time flies. stretched out."><figcaption><b>LegRoom.</b> Time flies. <i>stretched out.</i></figcaption></figure>
+  </div>
+  <p class="callout">Consistent: the line, the layout, the colour logic. Distinct: each product owns its own moment, its own person and its own ending to the sentence.</p>
+</div></section>
+
+<!-- BRIEF + IDEA -->
+<section class="chapter" id="idea"><div class="wrap">
+  <div class="num">04 · THE BRIEF, THE INSIGHT, THE IDEA</div>
+  <h2>Nobody looks forward to flight time.</h2>
+  <div class="grid3">
+    <div class="card"><h4>The brief</h4><p>Build awareness of SkyTime, SkyCafé and 32-inch LegRoom, and position Air Arabia as an airline that offers an enjoyable travel experience, under one idea for a global audience.</p></div>
+    <div class="card"><h4>Audience insight</h4><p>Travellers see the flight as dead time: hours to get through before the trip really starts. Yet everyone knows that <b>when you're enjoying yourself, you don't notice time passing.</b></p></div>
+    <div class="card"><h4>Creative idea</h4><p>Air Arabia doesn't make the flight shorter. It makes it <b>feel</b> shorter. SkyTime, SkyCafé and LegRoom are the reasons time flies on board.</p></div>
+  </div>
+  <div class="line">
+    <div class="big">Time flies.</div>
+    <p>Campaign line in English, with «الوقت يطير.» for Arabic-speaking markets.</p>
+  </div>
+  <div class="why">
+    <div><b>Universal</b><span>"Time flies" exists in almost every language, so it travels without translation.</span></div>
+    <div><b>Born from the brand</b><span>SkyTime already carries the word "time". The idea grows out of the product.</span></div>
+    <div><b>Experience, not features</b><span>We show how people feel on board instead of listing what the airline offers.</span></div>
+    <div><b>Built to extend</b><span>One line, three endings: every product gets its own moment.</span></div>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>We chose an idea people already know is true. “Time flies” needs no explanation in any market, it grows out of the product name SkyTime, and it lets us talk about the experience rather than list features, which is exactly what the brief asks for.</p></div>
+</div></section>
+
+<!-- ROUTES -->
+<section class="chapter" id="routes"><div class="wrap">
+  <div class="num">05 · ROUTES EXPLORED</div>
+  <h2>Four routes, one decision.</h2>
+  <div class="grid2">
+    <figure class="card"><img class="zoom" src="img/route_a_more_to_enjoy.jpg" alt="Route A: More to Enjoy on Every Flight"><h4>Route A · "More to Enjoy on Every Flight"</h4><figcaption>Clear and safe, but a list of features that any airline could run. The brief asks us to go beyond features.</figcaption></figure>
+    <figure class="card"><img class="zoom" src="img/kv_v2.jpg" alt="Route B: the path line"><h4>Route B · The path line</h4><figcaption>Air Arabia's journey line as the flight's progress bar. The guidelines reserve it for destinations (pp. 93–94), so it stays out of onboard communication.</figcaption></figure>
+    <figure class="card"><img class="zoom" src="img/kv_v4.jpg" alt="Route C: content boxes"><h4>Route C · Content boxes</h4><figcaption>The guideline's content box system (p. 118). On-brand, but heavy next to warm, emotional photography.</figcaption></figure>
+    <figure class="card pick"><img class="zoom" src="img/kv_india.jpg" alt="Chosen route"><h4>Chosen · "Time flies" typographic system</h4><figcaption>One line, real emotion, the logo above the content as the guidelines specify for onboard products (p. 127).</figcaption></figure>
+  </div>
+</div></section>
+
+<!-- SOCIAL -->
+<section class="chapter" id="social"><div class="wrap">
+  <div class="num">06 · SOCIAL MEDIA</div>
+  <h2>What fits in your flight?</h2>
+  <p class="lead">One flight, five moments: the flight time, SkyTime, SkyCafé, LegRoom, and the landing, "Already? Time flies." The same five moments run as a carousel, an animated GIF and Stories. Swipe the phone.</p>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="screen">
+        <div class="ig-head"><i></i>airarabia</div>
+        <div class="track-c" id="car" tabindex="0" aria-label="Carousel, swipe or use arrow keys">
+          <img src="img/carousel_01_master_1080x1350.jpg" alt="Slide 1: flight time 3h 10m">
+          <img src="img/carousel_02_skytime_1080x1350.jpg" alt="Slide 2: SkyTime, 3 episodes">
+          <img src="img/carousel_03_skycafe_1080x1350.jpg" alt="Slide 3: SkyCafé, 1 lunch">
+          <img src="img/carousel_04_legroom_1080x1350.jpg" alt="Slide 4: LegRoom, 1 good stretch">
+          <img src="img/carousel_05_outro_1080x1350.jpg" alt="Slide 5: Already? Time flies.">
+        </div>
+        <div class="dots" id="carDots"></div>
+      </div></div>
+      <p class="phone-cap"><b>Static carousel · 4:5.</b> Every swipe moves the flight forward.</p>
+    </div>
+    <div>
+      <div class="phone"><div class="screen story" id="story">
+        <div class="bars"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+        <img src="img/story_01_master_1080x1920.jpg" alt="Story 1: master">
+        <img src="img/story_02_skytime_1080x1920.jpg" alt="Story 2: SkyTime">
+        <img src="img/story_03_skycafe_1080x1920.jpg" alt="Story 3: SkyCafé">
+        <img src="img/story_04_legroom_1080x1920.jpg" alt="Story 4: LegRoom">
+        <img src="img/story_05_outro_1080x1920.jpg" alt="Story 5: Already? with Book your seat">
+      </div></div>
+      <p class="phone-cap"><b>Stories · 9:16.</b> The progress bar is the flight timeline.</p>
+    </div>
+    <div>
+      <div class="phone"><div class="screen"><div class="ig-head"><i></i>airarabia</div><img src="img/gif_carousel_swipe.gif" alt="Animated GIF: the carousel swipes itself" style="display:block;width:100%"></div></div>
+      <p class="phone-cap"><b>Animated GIF.</b> The carousel swipes itself, for feeds and paid placements.</p>
+    </div>
+  </div>
+  <h3>How the idea adapts to each platform</h3>
+  <div class="plats">
+    <div class="plat"><small>Carousel · Stories · Reels</small><h4>Instagram</h4><p>Every swipe moves the flight forward. A Stories question sticker, "Where are you flying next?", collects routes for new posts.</p></div>
+    <div class="plat"><small>Carousel ads · GIF</small><h4>Facebook</h4><p>City-targeted carousel ads with "Book now" on every card, so each market sees its own route.</p></div>
+    <div class="plat"><small>9:16 · reply with video</small><h4>TikTok</h4><p>The five moments as a 15-second video; route comments get personal video replies with their own "what fits".</p></div>
+    <div class="plat"><small>6" bumpers</small><h4>YouTube</h4><p>The flight clock runs from take-off to "Already?" in six seconds.</p></div>
+    <div class="plat"><small>GIF · stickers · channel</small><h4>X &amp; WhatsApp</h4><p>The GIF as a post and a reply; a weekly "flight equation" on the Air Arabia channel.</p></div>
+  </div>
+  <h3>Beyond launch · the route series</h3>
+  <div class="grid3">
+    <figure><img class="zoom" src="img/post_02_cairo_1080x1350.jpg" alt="Route post Sharjah to Cairo"><figcaption><b>SHJ → CAI.</b></figcaption></figure>
+    <figure><img class="zoom" src="img/post_03_riyadh_1080x1350.jpg" alt="Route post Sharjah to Riyadh"><figcaption><b>SHJ → RUH.</b></figcaption></figure>
+    <figure><img class="zoom" src="img/post_04_istanbul_skytime_1080x1350.jpg" alt="Route post Sharjah to Istanbul"><figcaption><b>SHJ → IST.</b></figcaption></figure>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>On social, people don't read ads, they swipe. Turning the flight time into what fits in it makes the benefits concrete (episodes, a meal, a stretch), turns the swipe itself into the passing flight, and invites people to comment with their own route. Every comment becomes new, local content.</p></div>
+</div></section>
+
+<!-- FILMS -->
+<section class="chapter" id="films"><div class="wrap">
+  <div class="num">07 · SOCIAL FILMS</div>
+  <h2>"Already?"</h2>
+  <p class="lead">One hero film and three product cutdowns. A montage of passengers on the same flight, each enjoying a different product, until the captain announces landing and someone looks up: "Already?".</p>
+  <div class="grid2" style="align-items:start">
+    <figure><img src="img/animatic_hero.gif" alt="Animatic of the hero film with timecode and subtitles"><figcaption><b>Animatic · Hero film 30".</b> The storyboard in motion, with timecode, dialogue and sound cues.</figcaption></figure>
+    <div class="card"><h4>Hero film · 30" · how to read it</h4><p>One flight, many passengers. We follow a montage of travellers on the same flight, each lost in a different product, while a ticking clock speeds up into music. The captain announces landing, and a boy looks up: "Already?".</p><ul>
+      <li><b>0:00–0:04</b> Set-up: flight time 3h 10m.</li>
+      <li><b>0:04–0:10</b> SkyTime: shows on their own devices.</li>
+      <li><b>0:10–0:17</b> SkyCafé: a hot meal, lunch together.</li>
+      <li><b>0:17–0:23</b> LegRoom: stretched out, at ease.</li>
+      <li><b>0:23–0:30</b> Landing call, "Already?", end card.</li>
+    </ul></div>
+  </div>
+  <h3>Storyboard · hero film 30"</h3>
+  <div class="sheet">
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_01.jpg" alt="Frame 1: A traveller settles into his window seat and closes his eyes."><span class="tc">0:00</span><span class="fn">01</span></div>
+      <p><b>Visual</b>A traveller settles into his window seat and closes his eyes.</p><p><b>Audio</b>Cabin hum. A clock ticks slowly. CAPTAIN (PA): “Ladies and gentlemen, flight time today: three hours and ten minutes.”</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_02.jpg" alt="Frame 2: A boy taps play on his tablet and his face lights up: SkyTime."><span class="tc">0:04</span><span class="fn">02</span></div>
+      <p><b>Visual</b>A boy taps play on his tablet and his face lights up: SkyTime.</p><p><b>Audio</b>A screen tap. The ticking speeds up.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_03.jpg" alt="Frame 3: A woman starts a series on her own tablet, smiling."><span class="tc">0:06</span><span class="fn">03</span></div>
+      <p><b>Visual</b>A woman starts a series on her own tablet, smiling.</p><p><b>Audio</b>Ticking faster.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_04.jpg" alt="Frame 4: A traveller laughs at a film on his laptop."><span class="tc">0:08</span><span class="fn">04</span></div>
+      <p><b>Visual</b>A traveller laughs at a film on his laptop.</p><p><b>Audio</b>The tick turns into a beat.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_05.jpg" alt="Frame 5: Cabin crew serve a hot SkyCafé meal with a smile."><span class="tc">0:10</span><span class="fn">05</span></div>
+      <p><b>Visual</b>Cabin crew serve a hot SkyCafé meal with a smile.</p><p><b>Audio</b>Trolley wheels. The music kicks in.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_06.jpg" alt="Frame 6: Close-up: the first forkful from the SkyCafé box."><span class="tc">0:12</span><span class="fn">06</span></div>
+      <p><b>Visual</b>Close-up: the first forkful from the SkyCafé box.</p><p><b>Audio</b>A satisfied “Mmm.”</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_07.jpg" alt="Frame 7: A family shares lunch, laughing together."><span class="tc">0:14</span><span class="fn">07</span></div>
+      <p><b>Visual</b>A family shares lunch, laughing together.</p><p><b>Audio</b>The music builds.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_08.jpg" alt="Frame 8: Seats back, legs stretched out: the family relaxes. LegRoom."><span class="tc">0:17</span><span class="fn">08</span></div>
+      <p><b>Visual</b>Seats back, legs stretched out: the family relaxes. LegRoom.</p><p><b>Audio</b>A long, relaxed sigh.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_09.jpg" alt="Frame 9: Wide: the whole row stretched out, room to spare."><span class="tc">0:19</span><span class="fn">09</span></div>
+      <p><b>Visual</b>Wide: the whole row stretched out, room to spare.</p><p><b>Audio</b>The music peaks.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_10.jpg" alt="Frame 10: A last sip of coffee, completely at ease."><span class="tc">0:21</span><span class="fn">10</span></div>
+      <p><b>Visual</b>A last sip of coffee, completely at ease.</p><p><b>Audio</b>The music stops. Cabin chime: ding.</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_11.jpg" alt="Frame 11: The family is still laughing at their show."><span class="tc">0:23</span><span class="fn">11</span></div>
+      <p><b>Visual</b>The family is still laughing at their show.</p><p><b>Audio</b>CAPTAIN (PA): “Cabin crew, prepare for landing.”</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_12.jpg" alt="Frame 12: The boy looks up, surprised."><span class="tc">0:26</span><span class="fn">12</span></div>
+      <p><b>Visual</b>The boy looks up, surprised.</p><p><b>Audio</b>BOY: “Already?”</p></figure>
+    <figure class="shot"><div class="ph"><img class="zoom" src="img/film_13.jpg" alt="Frame 13: End card: Time flies. SkyTime · SkyCafé · LegRoom."><span class="tc">0:28</span><span class="fn">13</span></div>
+      <p><b>Visual</b>End card: Time flies. SkyTime · SkyCafé · LegRoom.</p><p><b>Audio</b>VO: “Air Arabia. Time flies.” Cabin chime: ding.</p></figure>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>Everyone has heard a landing announcement. Ending on “Already?” turns that shared moment into proof of the idea. A montage of different passengers lets each product have its own moment while the story stays one flight, and the ticking clock that becomes music makes “time flies” something you can hear.</p></div>
+  <h3>Product cutdowns 15" and bumpers 6"</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Film</th><th>Story</th><th>Last line</th></tr></thead>
+    <tbody>
+      <tr><td>SkyTime 15"</td><td>Episode one at take-off; quick cuts to episode two and three. "We're beginning our descent." She pauses: "Already? I'm on episode three!"</td><td>Time flies. 3 episodes in.</td></tr>
+      <tr><td>SkyCafé 15"</td><td>A hot SkyCafé meal, then coffee, then dessert. With the last spoonful, the landing chime: "Already? I just finished dessert."</td><td>Time flies. over lunch.</td></tr>
+      <tr><td>LegRoom 15"</td><td>A tall traveller stretches his legs with room to spare and closes his eyes. Landing chime. He opens one eye: "Already?"</td><td>Time flies. stretched out.</td></tr>
+      <tr><td>Bumpers 6"</td><td>The on-screen flight clock runs from 3h 10m to 0m while a passenger smiles at their screen.</td><td>Already? Time flies.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="card"><h4>Sound &amp; music direction</h4><ul>
+      <li><b>The tick becomes the track:</b> a slow clock tick speeds up until it becomes the rhythm of an upbeat, percussive track.</li>
+      <li><b>Global with a regional accent:</b> modern pop production with Arabic percussion.</li>
+      <li><b>Silence before the payoff:</b> the music cuts on the landing call, so "Already?" lands in silence.</li>
+      <li><b>Sonic logo:</b> the cabin chime "ding" closes every spot.</li>
+    </ul></div>
+    <div class="card"><h4>Moodboard &amp; formats</h4><ul>
+      <li>Warm golden daylight; candid, unposed expressions; close framing on faces.</li>
+      <li>Red Cherry only inside the scene: headrests, cups, the SkyCafé box, crew uniform.</li>
+      <li>16:9 (YouTube), 9:16 (Reels, TikTok), 1:1 (feed). The "Flight time" super is the two-second hook.</li>
+    </ul>
+    <div class="swatches" aria-label="Colour palette">
+      <div class="sw"><i style="background:#FF0041"></i>Red Cherry</div><div class="sw"><i style="background:#C20041"></i>Dark Cherry</div><div class="sw"><i style="background:#00D0D0"></i>Turquoise</div><div class="sw"><i style="background:#39454B"></i>Dark Gray</div><div class="sw"><i style="background:#F3E3D3"></i>Warm daylight</div>
+    </div></div>
+  </div>
+</div></section>
+
+<!-- OUTDOOR -->
+<section class="chapter" id="outdoor"><div class="wrap">
+  <div class="num">08 · OUTDOOR</div>
+  <h2>Read in two seconds.</h2>
+  <p class="lead">Every board carries one thought: a hero image, no more than seven words, and the logo.</p>
+  <div class="grid2">
+    <figure><img class="zoom" src="img/Mockup_2x1_billboard.jpg" alt="2:1 billboard in context"><figcaption><b>2:1 in context.</b> Roadside boards on the way to the airport.</figcaption></figure>
+    <figure><img class="zoom" src="img/Mockup_1x1_screens.jpg" alt="1:1 screens in context"><figcaption><b>1:1 in context.</b> A sequence on airport and mall screens.</figcaption></figure>
+  </div>
+  <figure><img class="zoom" src="img/OOH_2x1_master_2400x1200.jpg" alt="2:1 master board"><figcaption><b>2:1 · Master.</b></figcaption></figure>
+  <figure><img class="zoom" src="img/OOH_2x1_products_2400x1200.jpg" alt="2:1 products board"><figcaption><b>2:1 · Products.</b> Three moments side by side; each panel completes the line.</figcaption></figure>
+  <div class="grid4">
+    <figure><img class="zoom" src="img/OOH_1x1_master_1600.jpg" alt="1:1 master"><figcaption><b>1:1 · Master</b></figcaption></figure>
+    <figure><img class="zoom" src="img/OOH_1x1_skytime_1600.jpg" alt="1:1 SkyTime"><figcaption><b>SkyTime</b></figcaption></figure>
+    <figure><img class="zoom" src="img/OOH_1x1_skycafe_1600.jpg" alt="1:1 SkyCafé"><figcaption><b>SkyCafé</b></figcaption></figure>
+    <figure><img class="zoom" src="img/OOH_1x1_legroom_1600.jpg" alt="1:1 LegRoom"><figcaption><b>LegRoom</b></figcaption></figure>
+  </div>
+  <p class="callout">The strongest location is the airport itself: exactly where travellers think about how long their flight will be.</p>
+  <div class="whybox"><span>Why this direction</span><p>Outdoor gets two seconds. We keep only the line, one emotional image and the logo. The wide 2:1 format holds the three products side by side, and the 1:1 series runs in sequence in airports, where travellers are already thinking about their flight.</p></div>
+</div></section>
+
+<!-- RADIO -->
+<section class="chapter" id="radio"><div class="wrap">
+  <div class="num">09 · RADIO</div>
+  <h2>You can hear time fly.</h2>
+  <p class="lead">A ticking clock that speeds up as the passenger enjoys each product, until it becomes music, and stops on "Already?". Written as a script with sound cues, to be recorded with professional voice talent.</p>
+  <div class="script" id="radio-script">
+    <div class="r" data-t="0"><span class="k">SFX</span><span class="sfx">Cabin ambience. A clock: tick… tick… tick.</span></div>
+    <div class="r" data-t="1.4"><span class="k">CAPTAIN</span><span>(calm, over the PA) Ladies and gentlemen, our flight time today is three hours and ten minutes.</span></div>
+    <div class="r" data-t="6.7"><span class="k">VO</span><span>(warm, smiling) Three hours and ten minutes. Let's see…</span></div>
+    <div class="r" data-t="9.8"><span class="k">SFX</span><span class="sfx">A tap on a screen. The ticking speeds up.</span></div>
+    <div class="r" data-t="10.3"><span class="k">VO</span><span>A few episodes on SkyTime, on your own device…</span></div>
+    <div class="r" data-t="13.4"><span class="k">SFX</span><span class="sfx">A trolley rolls by. A box opens. A satisfied “mmm”. The ticking turns into a beat.</span></div>
+    <div class="r" data-t="16.0"><span class="k">VO</span><span>…a hot meal from SkyCafé…</span></div>
+    <div class="r" data-t="18.1"><span class="k">SFX</span><span class="sfx">A long, relaxed stretch and sigh. The beat becomes an upbeat track.</span></div>
+    <div class="r" data-t="18.6"><span class="k">VO</span><span>…and thirty-two inches of LegRoom to stretch out.</span></div>
+    <div class="r" data-t="22.6"><span class="k">SFX</span><span class="sfx">Music stops. Cabin chime: ding.</span></div>
+    <div class="r" data-t="23.5"><span class="k">CAPTAIN</span><span>Cabin crew, prepare for landing.</span></div>
+    <div class="r" data-t="26.5"><span class="k">PASSENGER</span><span>(genuinely surprised) Already?</span></div>
+    <div class="r" data-t="27.7"><span class="k">VO</span><span>Air Arabia. Time flies.</span></div>
+    <div class="r" data-t="30.8"><span class="k">SFX</span><span class="sfx">Cabin chime: ding.</span></div>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>Radio has no pictures, so the idea has to live in sound. A clock that speeds up as the passenger enjoys each product makes “time flies” audible, and the silence before “Already?” gives the line its punch. The cabin chime links radio to the films as one sonic signature.</p></div>
+  <div class="grid2">
+    <div class="card"><h4>Sound cues</h4><ul>
+      <li>Clock tick: the campaign's audio device, from slow to fast to music.</li>
+      <li>Product sounds: screen tap and laughter (SkyTime), trolley and box (SkyCafé), stretch and sigh (LegRoom).</li>
+      <li>Silence before "Already?" so the payoff lands; the cabin chime as the sonic logo.</li>
+    </ul></div>
+    <div class="card"><h4>Arabic version</h4><p>Recorded with an Arabic voiceover for Arabic-speaking markets, same sound design. Tagline: «العربية للطيران. الوقت يطير.»</p></div>
+  </div>
+</div></section>
+
+<!-- FLYERS -->
+<section class="chapter" id="flyers"><div class="wrap">
+  <div class="num">10 · INTERNAL &amp; TRADE COMMUNICATIONS</div>
+  <h2>Everyone who makes time fly.</h2>
+  <div class="grid2">
+    <figure class="card"><img class="zoom" src="img/Flyer_Internal_A4.jpg" alt="Internal A4 flyer"><h4>Internal · "We make time fly."</h4><figcaption>For Air Arabia teams: the campaign, the three products, and a simple role for each team. Crew mention SkyTime and serve SkyCafé with a smile, ground teams remind passengers to charge their devices, everyone shares #TimeFlies.</figcaption></figure>
+    <figure class="card"><img class="zoom" src="img/Flyer_Trade_A4.jpg" alt="Trade A4 flyer"><h4>Trade · "Sell a flight that flies by."</h4><figcaption>For travel partners: one benefit and one ready-to-use sentence per product, answers to common customer questions, and a QR code to campaign assets on the partner portal.</figcaption></figure>
+  </div>
+  <div class="whybox"><span>Why this direction</span><p>The people who deliver the products should own the idea, so the internal flyer says “We make time fly”. Travel partners need selling tools rather than ads, so the trade flyer gives one benefit and one ready-to-use sentence per product.</p></div>
+</div></section>
+
+<!-- PROCESS -->
+<section class="chapter" id="ai"><div class="wrap">
+  <div class="num">11 · PROCESS</div>
+  <h2>How the work was made.</h2>
+  <p class="lead">A designer-led process. Technology speeds up the start; the craft is in the thinking, the editing and the finish.</p>
+  <div class="process">
+    <div class="pstep"><span class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8a11 11 0 0 0-6 20v5h12v-5a11 11 0 0 0-6-20z" fill="none" stroke="#fff" stroke-width="3"/><line x1="19" y1="38" x2="29" y2="38" stroke="#fff" stroke-width="3"/></svg></span><small>01</small><h4>Concept &amp; thinking</h4><p>Insight, idea, routes and copy. AI used as a thinking partner to explore and test.</p></div>
+    <div class="pstep"><span class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7 L28 20 L41 24 L28 28 L24 41 L20 28 L7 24 L20 20 Z" fill="#fff"/></svg></span><small>02</small><h4>Image generation</h4><p>AI tools for the first photographic drafts of each scene.</p></div>
+    <div class="pstep"><span class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="12" width="22" height="22" rx="2" fill="none" stroke="#fff" stroke-width="3"/><rect x="17" y="18" width="22" height="22" rx="2" fill="none" stroke="#fff" stroke-width="3"/></svg></span><small>03</small><h4>Enhancing &amp; editing</h4><p>Adobe applications: compositing, retouching, branding inside the scene, colour.</p></div>
+    <div class="pstep"><span class="ico"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 25 L21 34 L37 15" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><small>04</small><h4>Finishing</h4><p>Design experience: layout, typography and the Air Arabia brand system across every touchpoint.</p></div>
+  </div>
+  <p class="demo-note">No stock imagery was used.</p>
+</div></section>
+
+<!-- PRODUCTION -->
+<section class="chapter" id="production"><div class="wrap">
+  <div class="num">12 · PRODUCTION, ROLLOUT &amp; MEASUREMENT</div>
+  <h2>From concept to campaign.</h2>
+  <div class="grid3">
+    <div class="card"><h4>One shoot, every asset</h4><p>A two-day shoot in a real Air Arabia A320 cabin (or a matching set) with casting from the GCC, the India region and Eastern Europe. One shoot delivers key visuals, product stills, the hero film, cutdowns, bumpers and social content.</p></div>
+    <div class="card"><h4>Rollout</h4><ul><li><b>Launch:</b> key visual, outdoor, hero film, radio.</li><li><b>Sustain:</b> product films, carousel, Stories, product outdoor.</li><li><b>Always on:</b> route series, comment replies, GIFs.</li></ul></div>
+    <div class="card"><h4>How we'd measure it</h4><ul><li>Awareness of SkyTime, SkyCafé and LegRoom (brand lift).</li><li>Social engagement: swipe-through rate, saves, route comments.</li><li>Film completion rate and ad recall.</li><li>Trade: partner asset downloads.</li></ul></div>
+  </div>
+</div></section>
+</main>
+
+<footer class="end"><div class="wrap">
+  <div class="big">Already?</div>
+  <p>Time flies. SkyTime · SkyCafé · LegRoom. Air Arabia.</p>
+  <div class="byline end-by"><span class="by-lab">Thank you</span><span class="by-name">Hussein Masri</span><span class="by-role">Visual Art Designer assignment · submitted for the Visual Art Designer role at Air Arabia</span></div>
+  <a class="next" href="brief2.html">Next · Assessment 02: Christmas Takes Flight →</a>
+</div></footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* flight progress = scroll progress */
+  var fill=document.getElementById('fill'), plane=document.getElementById('plane'), left=document.getElementById('left');
+  function fmt(m){m=Math.max(0,Math.round(m));return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'m';}
+  function onScroll(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight, p=max>0?Math.min(1,h.scrollTop/max):0;
+    fill.style.width=(p*100)+'%'; plane.style.left=(p*100)+'%';
+    left.textContent = p>0.985 ? 'Already?' : fmt(190*(1-p))+' left';
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* active nav link */
+  var links=[].slice.call(document.querySelectorAll('nav.top a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});}});},{rootMargin:'-45% 0px -50% 0px'});
+    document.querySelectorAll('main>section[id]').forEach(function(s){io.observe(s);});
+  }
+
+  /* cover clock: 3h 10m counts down to Already? */
+  var ct=document.getElementById('ctime'), cl=document.getElementById('clab');
+  function runClock(){
+    if(reduce) return;
+    var m=190, t0=null;
+    function step(ts){ if(!t0) t0=ts; var e=(ts-t0)/3200; var v=190*(1-Math.min(1,e*e));
+      ct.textContent=fmt(v); cl.textContent='Time to destination';
+      if(e<1) requestAnimationFrame(step); else { cl.textContent='Landing'; ct.textContent='Already?'; setTimeout(function(){cl.textContent='Flight time'; ct.textContent='3h 10m'; setTimeout(runClock,1800);},2600); } }
+    requestAnimationFrame(step);
+  }
+  setTimeout(runClock,900);
+
+  /* reveal: content is visible by default; play a rise when it enters */
+  if(!reduce && 'IntersectionObserver' in window){
+    var targets=document.querySelectorAll('.chapter h2, .chapter .lead, .card, figure, .plat, .stat, .line, .phone, .why>div, .whybox, .edit, .pstep');
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('rise');ro.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+    targets.forEach(function(t){ var r=t.getBoundingClientRect(); if(r.top>innerHeight) ro.observe(t); });
+  }
+
+  /* count-up stats */
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    if(reduce) return; var n=+el.dataset.count, i=0; el.textContent='0';
+    var obs=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ obs.disconnect(); var t=setInterval(function(){i++; el.textContent=i; if(i>=n) clearInterval(t);},160);} });
+    obs.observe(el);
+  });
+
+  /* morph stage: one idea, many faces */
+  var mimgs=[].slice.call(document.querySelectorAll('#morph .m-img')), scan=document.querySelector('#morph .scan'), mi=0, mAuto=true, mTimer=null;
+  var AUD=['GCC / ARAB','INDIA REGION','EASTERN / EUROPE'], obtn=[].slice.call(document.querySelectorAll('#kv .opts button'));
+  function morph(k){
+    if(k===mi) return; var prev=mimgs[mi], next=mimgs[k];
+    obtn.forEach(function(b,j){b.setAttribute('aria-pressed', j===k?'true':'false');});
+    document.getElementById('hudAud').textContent=AUD[k]; document.getElementById('hudIdx').textContent='0'+(k+1)+' / 03';
+    if(reduce){ prev.classList.remove('on'); next.classList.add('on'); mi=k; return; }
+    next.classList.add('in'); scan.classList.remove('go'); void scan.offsetWidth; scan.classList.add('go');
+    setTimeout(function(){ prev.classList.remove('on'); next.classList.remove('in'); next.classList.add('on'); },960);
+    mi=k;
+  }
+  obtn.forEach(function(b){ b.addEventListener('click',function(){ mAuto=false; morph(+b.dataset.i); clearTimeout(mTimer); mTimer=setTimeout(function(){mAuto=true;},12000); }); });
+  setInterval(function(){ if(mAuto && !document.hidden) morph((mi+1)%3); },3800);
+
+  /* phone carousel: swipe, dots, gentle autoplay */
+  var car=document.getElementById('car'), dots=document.getElementById('carDots'), n=car.children.length, cur=0, auto=!reduce, timer=null;
+  for(var i=0;i<n;i++){(function(k){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label','Slide '+(k+1));d.addEventListener('click',function(){auto=false;go(k);});dots.appendChild(d);})(i);}
+  function mark(){[].forEach.call(dots.children,function(d,k){d.setAttribute('aria-current',k===cur?'true':'false');});}
+  function go(k){cur=(k+n)%n; car.scrollTo({left:cur*car.clientWidth,behavior:reduce?'auto':'smooth'}); mark();}
+  car.addEventListener('scroll',function(){var k=Math.round(car.scrollLeft/car.clientWidth); if(k!==cur){cur=k;mark();}},{passive:true});
+  ['pointerdown','touchstart','wheel'].forEach(function(ev){car.addEventListener(ev,function(){auto=false;},{passive:true});});
+  car.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){auto=false;go(cur+1);} if(e.key==='ArrowLeft'){auto=false;go(cur-1);}});
+  mark(); timer=setInterval(function(){ if(auto) go(cur+1); },2400);
+
+  /* stories: progress bars fill, frames advance */
+  var st=document.getElementById('story'), imgs=st.querySelectorAll('img'), bars=st.querySelectorAll('.bars i'), si=0;
+  st.classList.add('ready');
+  function showStory(k){ imgs.forEach(function(im,j){im.classList.toggle('on',j===k);}); bars.forEach(function(b,j){ b.style.transition='none'; b.style.width=j<k?'100%':'0%'; }); }
+  function playStory(){ showStory(si); if(reduce){bars[si].style.width='100%';return;} var b=bars[si]; void b.offsetWidth; b.style.transition='width 2.6s linear'; b.style.width='100%'; setTimeout(function(){ si=(si+1)%imgs.length; playStory(); },2700); }
+  playStory();
+
+  /* AI generation -> final: four pairs, auto-sweep each pair in turn until the viewer takes over */
+  var br=document.getElementById('baRange'), bt=document.getElementById('baTop'), bl=document.getElementById('baLine'),
+      bRaw=document.getElementById('baRaw'), bFin=document.getElementById('baFin'), tabs=[].slice.call(document.querySelectorAll('#baTabs button')),
+      touched=false, cur=0, playing=false, seen=false;
+  function ba(v){ if(v!==undefined) br.value=v; v=+br.value; bt.style.clipPath='inset(0 '+(100-v)+'% 0 0)'; bl.style.left=v+'%'; }
+  function pick(k){ cur=k; tabs.forEach(function(t,j){ t.setAttribute('aria-pressed', j===k?'true':'false'); }); bRaw.src=tabs[k].dataset.raw; bFin.src=tabs[k].dataset.fin; }
+  function sweep(done){ if(reduce){ ba(50); return; } playing=true; var t0=null, path=[[0,100],[1300,100],[2600,0],[3600,0],[4400,50]];
+    function step(ts){ if(touched){ playing=false; return; } if(!t0) t0=ts; var e=ts-t0, v=path[path.length-1][1];
+      for(var i=1;i<path.length;i++){ if(e<=path[i][0]){ var p=(e-path[i-1][0])/(path[i][0]-path[i-1][0]); p=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; v=path[i-1][1]+(path[i][1]-path[i-1][1])*p; break; } }
+      ba(v); if(e<path[path.length-1][0]) requestAnimationFrame(step); else { playing=false; if(done) done(); } }
+    requestAnimationFrame(step); }
+  function tour(){ if(touched) return; sweep(function(){ if(touched) return; setTimeout(function(){ if(touched) return; pick((cur+1)%tabs.length); tour(); },900); }); }
+  br.addEventListener('input',function(){ touched=true; ba(); });
+  tabs.forEach(function(t,j){ t.addEventListener('click',function(){ touched=true; pick(j); ba(50); }); });
+  ba(50);
+  if('IntersectionObserver' in window){ var bo=new IntersectionObserver(function(es){ if(es[0].isIntersecting && !seen){ seen=true; bo.disconnect(); setTimeout(tour,400); } },{threshold:.5}); bo.observe(document.getElementById('ba')); }
+
+  /* lightbox for any zoomable image */
+  document.addEventListener('click',function(e){
+    var im=e.target.closest('img.zoom'); if(!im) return;
+    var lb=document.createElement('div'); lb.className='lb'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-label','Image preview');
+    lb.innerHTML='<button type="button">Close</button><img alt="">'; lb.querySelector('img').src=im.currentSrc||im.src; lb.querySelector('img').alt=im.alt;
+    function close(){lb.remove(); document.removeEventListener('keydown',esc);} function esc(ev){if(ev.key==='Escape') close();}
+    lb.addEventListener('click',function(ev){ if(ev.target!==lb.querySelector('img')) close(); });
+    document.addEventListener('keydown',esc); document.body.appendChild(lb); lb.querySelector('button').focus();
+  });
+})();
+</script>
+
+</body>
+</html>

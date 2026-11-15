@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Hussein Masri · Air Arabia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: portfolio hub — name and intro, an animated ribbon flight path, two large assessment cards that open each campaign.
+   Single light look on purpose (Air Arabia White Cloud + Red Cherry). */
+@font-face{font-family:"AirArabia";src:url("fonts/AirArabia_Rg.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"AirArabia";src:url("fonts/AirArabia_Bd.ttf") format("truetype");font-weight:700;font-display:swap}
+:root{--red:#FF0041;--cherry:#C20041;--turq:#00D0D0;--gray:#39454B;--bg:#FFFFFF;--soft:#F6F4F5;--line:#E6E1E3;--fg:#22292D;--muted:#5E6A70;
+  --display:"AirArabia","Noto Sans",system-ui,sans-serif;--body:"Noto Sans",system-ui,sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.7;margin:0;overflow-x:hidden}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px, env(safe-area-inset-left,0px));padding-right:max(20px, env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05;color:var(--gray);text-wrap:balance}
+p{margin:0}
+header{position:relative;overflow:hidden}
+header .wrap{padding-block:64px 40px;display:grid;gap:18px;position:relative;z-index:1}
+.kick{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--red)}
+h1{font-size:clamp(56px,11vw,150px);font-weight:700;letter-spacing:-.02em}
+h1 .r{color:var(--red)}
+.role{font-family:var(--display);font-size:clamp(20px,2.4vw,28px);color:var(--gray)}
+.intro{max-width:66ch;color:var(--muted);font-size:18px}
+.ribbon{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.ribbon path.r1{stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 3.2s cubic-bezier(.6,0,.2,1) .3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.facts{display:flex;flex-wrap:wrap;gap:10px}
+.facts span{font-family:var(--display);font-size:14px;border:1px solid var(--line);padding:4px 12px;border-radius:20px;color:var(--gray);background:#fff}
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:28px;padding-block:20px 72px}
+.work{position:relative;display:grid;text-decoration:none;color:inherit;border-radius:10px;overflow:hidden;background:#111;box-shadow:0 30px 70px rgba(20,23,25,.22);isolation:isolate;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+.work:hover,.work:focus-visible{transform:translateY(-6px);box-shadow:0 40px 90px rgba(20,23,25,.32);outline:none}
+.work:focus-visible{outline:3px solid var(--red);outline-offset:4px}
+.thumb{position:relative;aspect-ratio:16/10;overflow:hidden}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease, transform 6s ease}
+.thumb img.on{opacity:1;transform:scale(1.04)}
+.thumb img:first-child{opacity:1}
+.thumb.ready img:first-child:not(.on){opacity:0}
+.work:hover .thumb img.on{transform:scale(1.08)}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 22%,rgba(10,12,14,.55) 55%,rgba(10,12,14,.92) 100%)}
+.info{position:absolute;inset:auto 0 0 0;padding:26px 28px;display:grid;gap:8px;z-index:2;color:#fff}
+.info .n{justify-self:start;font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.1em;color:#fff;background:#FF0041;padding:3px 10px}
+.info h2{color:#fff;font-size:clamp(28px,3.4vw,44px)}
+.info .brief{font-size:15px;opacity:.9}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-family:var(--display);font-size:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);padding:2px 10px;border-radius:12px}
+.go{justify-self:start;font-family:var(--display);font-weight:700;background:var(--red);color:#fff;padding:8px 18px;margin-top:6px;transition:background .2s}
+.work:hover .go{background:#fff;color:var(--red)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;padding-bottom:64px}
+.note{border-top:3px solid var(--red);padding-top:12px;display:grid;gap:6px}
+.note b{font-family:var(--display);color:var(--gray)}
+.note p{color:var(--muted);font-size:15px}
+footer{background:var(--red);color:#fff}
+footer .wrap{padding-block:36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px}
+footer b{font-family:var(--display);font-size:18px}
+@media (prefers-reduced-motion:reduce){.ribbon path.r1{animation:none;stroke-dashoffset:0}.work,.thumb img{transition:none}}
+</style>
+</head>
+<body>
+
+
+<header>
+  <svg class="ribbon" viewBox="0 0 1440 600" preserveAspectRatio="none" aria-hidden="true">
+    <path class="r1" d="M760 610 C 960 560, 1020 330, 1180 300 S 1380 200, 1480 60" fill="none" stroke="#FF0041" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+    <path d="M760 630 C 960 580, 1020 350, 1180 320 S 1380 220, 1480 80" fill="none" stroke="#FF0041" stroke-width="2" stroke-dasharray="4 14" opacity=".35"/>
+    <g>
+      <circle r="9" fill="#FF0041"><animateMotion dur="7s" repeatCount="indefinite" path="M760 610 C 960 560, 1020 330, 1180 300 S 1380 200, 1480 60"/></circle>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="kick">PORTFOLIO · AIR ARABIA · VISUAL ART DESIGNER ASSESSMENT</div>
+    <h1>Hussein <span class="r">Masri</span></h1>
+    <div class="role">Visual Art Designer · two campaigns for Air Arabia</div>
+    <p class="intro">Two briefs, two campaigns, one brand. Each concept was developed within a short timeframe to show creative thinking, the routes explored and how one idea extends across every touchpoint. Choose an assessment to open the full campaign.</p>
+    <div class="facts"><span>2 campaigns</span><span>6 key visual options</span><span>7 European markets</span><span>15+ touchpoints</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="works">
+    <a class="work" href="brief1.html" aria-label="Open Assessment 01: Time flies">
+      <div class="thumb" data-rot>
+        <img src="img/raw_master2.jpg" alt="">
+        <img src="img/raw_skytime.jpg" alt="">
+        <img src="img/raw_skycafe.jpg" alt="">
+        <img src="img/raw_legroom.jpg" alt="">
+      </div>
+      <div class="info">
+        <span class="n">ASSESSMENT 01 · BRING THE AIR ARABIA EXPERIENCE TO LIFE</span>
+        <h2>Time flies.</h2>
+        <p class="brief">A 360° campaign for SkyTime, SkyCafé and LegRoom.</p>
+        <div class="chips"><span>Key Visual</span><span>Social</span><span>Films</span><span>Outdoor</span><span>Radio</span><span>Internal</span><span>Trade</span></div>
+        <span class="go">View campaign →</span>
+      </div>
+    </a>
+    <a class="work" href="brief2.html" aria-label="Open Assessment 02: Christmas Takes Flight">
+      <div class="thumb" data-rot>
+        <img src="img2/raw_v3.jpg" alt="">
+        <img src="img2/raw_v2.jpg" alt="">
+        <img src="img2/raw_v1.jpg" alt="">
+      </div>
+      <div class="info">
+        <span class="n">ASSESSMENT 02 · CHRISTMAS WITH AIR ARABIA</span>
+        <h2>Christmas Takes Flight.</h2>
+        <p class="brief">A Christmas campaign for seven European markets.</p>
+        <div class="chips"><span>Key Visual</span><span>Outdoor</span><span>Social</span><span>Digital</span><span>7 markets</span></div>
+        <span class="go">View campaign →</span>
+      </div>
+    </a>
+  </div>
+  <div class="notes">
+    <div class="note"><b>Thinking first</b><p>Each campaign shows the insight, the routes explored and the reason behind every choice, as the brief asks.</p></div>
+    <div class="note"><b>Built on the brand</b><p>Air Arabia typeface, colours and layout principles from the brand guidelines, applied across every format.</p></div>
+    <div class="note"><b>Imagery</b><p>Created with AI image-generation tools, then enhanced and edited in Adobe applications. No stock imagery was used.</p></div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <b>Hussein Masri</b>
+  <span>Created solely for the Air Arabia Visual Art Designer assessment. © 2026 Hussein Masri. Not for commercial use without permission.</span>
+</div></footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-rot]').forEach(function(t, n){
+    var imgs=[].slice.call(t.querySelectorAll('img')), i=0; t.classList.add('ready'); imgs[0].classList.add('on');
+    if(reduce) return;
+    setTimeout(function(){ setInterval(function(){ imgs[i].classList.remove('on'); i=(i+1)%imgs.length; imgs[i].classList.add('on'); },3200); }, n*1600);
+  });
+})();
+</script>
+
+</body>
+</html>
