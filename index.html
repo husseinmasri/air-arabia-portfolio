@@ -61,6 +61,13 @@ footer .wrap{padding-block:36px;display:flex;flex-wrap:wrap;justify-content:spac
 footer b{font-family:var(--display);font-size:18px}
 @media (prefers-reduced-motion:reduce){.ribbon path.r1{animation:none;stroke-dashoffset:0}.work,.thumb img{transition:none}}
 </style>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ze18048b0b");
+</script>
 </head>
 <body>
 
@@ -137,5 +144,35 @@ footer b{font-family:var(--display);font-size:18px}
 })();
 </script>
 
+<script>
+/* Clarity custom events: which assessment was opened, which chapters were reached, what was clicked */
+(function(){
+  function ev(n){ try{ window.clarity("event", n); }catch(e){} }
+  var page = (location.pathname.split('/').pop() || 'index.html').replace('.html','') || 'index';
+  try{ window.clarity("set", "page_name", page); }catch(e){}
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(a){ var h = a.getAttribute('href') || '';
+      if(/brief1/.test(h)) ev('open_assessment_01_time_flies');
+      else if(/brief2/.test(h)) ev('open_assessment_02_christmas');
+      else if(/index\.html/.test(h)) ev('back_to_hub');
+      else if(h.charAt(0) === '#') ev(page + '_nav_' + h.slice(1)); }
+    if(e.target.closest && e.target.closest('#kv .opts button')) ev(page + '_kv_option_click');
+    if(e.target.closest && e.target.closest('#baTabs button')) ev(page + '_ai_to_final_tab');
+    if(e.target.closest && e.target.closest('img.zoom')) ev(page + '_image_zoom');
+    if(e.target.closest && e.target.closest('.track-c, .dots')) ev(page + '_carousel_swipe');
+  }, true);
+  var br = document.getElementById('baRange');
+  if(br) br.addEventListener('input', function once(){ ev(page + '_ai_to_final_drag'); br.removeEventListener('input', once); });
+  if('IntersectionObserver' in window){
+    var seen = {};
+    var io = new IntersectionObserver(function(es){ es.forEach(function(x){
+      if(x.isIntersecting && !seen[x.target.id]){ seen[x.target.id] = 1; ev(page + '_seen_' + x.target.id); } }); }, {threshold: .35});
+    document.querySelectorAll('main > section[id]').forEach(function(s){ io.observe(s); });
+    var end = document.querySelector('footer');
+    if(end) new IntersectionObserver(function(es){ if(es[0].isIntersecting && !seen.__end){ seen.__end = 1; ev(page + '_reached_end'); } }, {threshold: .3}).observe(end);
+  }
+})();
+</script>
 </body>
 </html>
