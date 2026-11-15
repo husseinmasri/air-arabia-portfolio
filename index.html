@@ -59,6 +59,16 @@ h1 .r{color:var(--red)}
 footer{background:var(--red);color:#fff}
 footer .wrap{padding-block:36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px}
 footer b{font-family:var(--display);font-size:18px}
+.scope{background:var(--soft);border-radius:10px;padding:clamp(24px,4vw,44px);margin-bottom:64px;display:grid;gap:22px}
+.scope .k{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.08em;color:var(--red)}
+.scope h2{font-size:clamp(28px,3.4vw,42px)}
+.scope .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:18px}
+.scope .sc{border-top:3px solid var(--red);padding-top:12px;display:grid;gap:6px;align-content:start}
+.scope .sc h4{font-family:var(--display);color:var(--gray);margin:0;font-size:17px}
+.scope .sc p{color:var(--muted);font-size:14.5px;line-height:1.6}
+.scope .sig{color:var(--gray);font-size:15px}
+.pdf{display:inline-flex;align-items:center;gap:10px;justify-self:start;font-family:var(--display);font-weight:700;background:var(--gray);color:#fff;text-decoration:none;padding:10px 20px;border-radius:2px;transition:background .2s}
+.pdf:hover,.pdf:focus-visible{background:var(--red)}
 @media (prefers-reduced-motion:reduce){.ribbon path.r1{animation:none;stroke-dashoffset:0}.work,.thumb img{transition:none}}
 </style>
 <script type="text/javascript">
@@ -85,6 +95,7 @@ footer b{font-family:var(--display);font-size:18px}
     <h1>Hussein <span class="r">Masri</span></h1>
     <div class="role">Visual Art Designer · two campaigns for Air Arabia</div>
     <p class="intro">Two briefs, two campaigns, one brand. Each concept was developed within a short timeframe to show creative thinking, the routes explored and how one idea extends across every touchpoint. Choose an assessment to open the full campaign.</p>
+    <a class="pdf" href="Hussein_Masri_AirArabia_Assessment.pdf" download>Download the full project (PDF) ↓</a>
     <div class="facts"><span>2 campaigns</span><span>6 key visual options</span><span>7 European markets</span><span>15+ touchpoints</span></div>
   </div>
 </header>
@@ -126,6 +137,18 @@ footer b{font-family:var(--display);font-size:18px}
     <div class="note"><b>Built on the brand</b><p>Air Arabia typeface, colours and layout principles from the brand guidelines, applied across every format.</p></div>
     <div class="note"><b>Imagery</b><p>Created with AI image-generation tools, then enhanced and edited in Adobe applications. No stock imagery was used.</p></div>
   </div>
+  <section class="scope" aria-labelledby="scopeH">
+    <div class="k">A NOTE ON SCOPE</div>
+    <h2 id="scopeH">Two campaigns, one designer, work in progress.</h2>
+    <div class="grid">
+    <div class="sc"><h4>Agency-scale scope</h4><p>Each brief describes a full 360° campaign, work a media agency would normally deliver with a team of strategists, copywriters, art directors, designers and producers over several weeks. Both campaigns here were developed by one designer.</p></div>
+    <div class="sc"><h4>Understanding the brand</h4><p>Doing this properly takes time: studying the Air Arabia brand guidelines, the onboard products, the markets and the business goals behind each brief before designing a single frame.</p></div>
+    <div class="sc"><h4>Where the focus went</h4><p>Most of my time went into Assessment 01, Time flies. Assessment 02, Christmas Takes Flight, is a developed draft that shows the idea, the visual system and how it adapts by market.</p></div>
+    <div class="sc"><h4>Work in progress</h4><p>Neither campaign is final artwork. Both are a showcase of thinking and work in progress, ready to be refined with the team, real brand assets and feedback.</p></div>
+    <div class="sc"><h4>AI as a creative partner</h4><p>I use AI tools to speed up exploration and push the creative further. The ideas, art direction, editing, layout and every design decision are my own; AI helps me deliver more, faster, and at a higher standard.</p></div>
+    </div>
+    <p class="sig">Thank you for taking the time to review this work. I look forward to developing it further with the Air Arabia team. · Hussein Masri</p>
+  </section>
 </main>
 
 <footer><div class="wrap">
